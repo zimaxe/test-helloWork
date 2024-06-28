@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <section class="py-5 text-center container">
+        <div class="row pt-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Hello Work Test</h1>
+                <p class="lead text-body-secondary">Candidat: Maxime Zamoun</p>
+            </div>
+        </div>
+    </section>
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <h2>Trouver un job ?</h2>
+            <div class="col mb-3">
+                <span class="badge text-bg-primary">Total : {{ jobs.total }} resultats</span>
+            </div>
+
+            {% if jobs.total > 0 %}
+                <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for job in jobs.jobOffers %}
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex flex-column">
+                                    {% if job.title %}
+                                        <h5 class="card-title">{{ job.title }}</h5>
+                                    {% endif %}
+                                    <h6 class="card-subtitle text-body-secondary">
+                                        {% if job.company %} {{ job.company }} {% endif %}
+                                        {% if job.city %}
+                                            <span class="badge text-bg-light">{{ job.city }}</span>
+                                        {% endif %}
+                                    </h6>
+                                    {% if job.description %}
+                                        <p class="card-text my-4">{{ job.description[:80] ~ '...' }}</p>
+                                    {% endif %}
+                                    <div class="mt-auto">
+                                        {% if job.link %}
+                                            <a href="{{ job.link }}" class="btn btn-sm btn-outline-primary float-end"
+                                               target="_blank">Voir l'offre</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Aucun resultat</p>
+            {% endif %}
+
+            <twig:paginator currentPage="{{ page }}" totalItems="{{ jobs.total }}"/>
+        </div>
+    </div>
+{% endblock %}

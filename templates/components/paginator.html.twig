@@ -1,0 +1,28 @@
+{% if this.paginate and this.totalPages >= this.currentPage %}
+    <nav aria-label="Page navigation" class="mt-5">
+        <ul class="pagination justify-content-end">
+
+            <li class="page-item {% if this.currentPage == 1 %} disabled {% endif %}">
+                <a class="page-link" href="{{ path('home_page') }}">First</a>
+            </li>
+
+            <li class="page-item {% if this.currentPage == 1 %} disabled {% endif %}">
+                <a class="page-link" href="{{ path('home_page', { 'page': this.currentPage- 1 }) }}">&laquo;</a>
+            </li>
+
+            {% for key,link in this.paginate.links %}
+                <li class="page-item {% if this.currentPage == key %} active {% endif %}">
+                    <a class="page-link" href="{{ path('home_page', { 'page': link }) }}">{{ key }}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item {% if this.totalPages == this.currentPage %} disabled {% endif %}">
+                <a class="page-link" href="{{ path('home_page', { 'page': this.currentPage + 1 }) }}">&raquo;</a>
+            </li>
+
+            <li class="page-item {% if this.totalPages == this.currentPage %} disabled {% endif %}">
+                <a class="page-link" href="{{ path('home_page', { 'page': this.totalPages }) }}">Last</a>
+            </li>
+        </ul>
+    </nav>
+{% endif %}
